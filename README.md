@@ -53,6 +53,8 @@ services:
 docker exec -it 'nombre_contenedor' bash
 ````
 En mi caso seria ``docker exec -it ccb57bc8f15f02cba306c2937d7a3a7264e4629cfd8b763a5e272e44b08c87fb bash``
+o ``docker exec -it mycassandra_spring bash``
+
 
 6. Una vez hecho esto accedemos a cassandra, escribiendo ``cqlsh``.
 
