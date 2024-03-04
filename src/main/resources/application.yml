@@ -1,0 +1,8 @@
+spring:
+  data:
+    cassandra:
+      entity-base-package: cassandra
+  cassandra:
+    contact-points: mycassandra
+    keyspace-name: products
+    port: 9042
