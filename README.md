@@ -194,29 +194,8 @@ public class ErrorResponse {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
     }
 ```
+En este método, retornamos el producto creado o un mensaje indicando que el producto se ha creado. Si algún campo es null, se recibe una respuesta de bad request. Si el precio es menor que 0, también se recibe un bad request. Si no hay ningún problema, se recibe el producto creado.
 
-5. Desarrollo de la Aplicación
-Creamos nuestro modelo, en este caso:
-```
- Product:
-java
-Copy code
-@Table
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Product {
-
-    @PrimaryKey
-    private String id;
-
-    private String name;
-    private String description;
-    private Double  price;
-    private String image;
-    private String category;
-}
-```
 
 Creamos el ProductRepository que extiende de CassandraRepository para conectar con la base de datos:
 ```
@@ -238,36 +217,6 @@ public class ErrorResponse {
 }
 ```
 
-En el controlador gestionamos el CRUD. Por ejemplo, para el método POST:
-```
-@PostMapping("/products")
-public ResponseEntity<?> addProduct(@RequestBody Product product) {
-    if (product.getId() == null || product.getName() == null || product.getDescription() == null ||
-            product.getPrice() <= 0 || product.getImage() == null || product.getCategory() == null) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "All fields are required. Please provide values for id, name, description, price, image, and category.");
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-    }
-
-    // Verificar si la ID del producto ya existe en la base de datos
-    if (productRepository.existsById(product.getId())) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Product with ID " + product.getId() + " already exists");
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-    }
-
-    // Verificar que el precio sea mayor que 0
-    if (product.getPrice() <= 0) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Price must be greater than 0");
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-    }
-
-    // Guardar el nuevo producto en la base de datos
-    Product savedProduct = productRepository.save(product);
-
-    // Retornar el producto guardado junto con el código de estado HTTP 201 (Created)
-    return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
-}
-```
-En este método, retornamos el producto creado o un mensaje indicando que el producto se ha creado. Si algún campo es null, se recibe una respuesta de bad request. Si el precio es menor que 0, también se recibe un bad request. Si no hay ningún problema, se recibe el producto creado.
 
 
 ## 6. Ejecución de la Aplicación
