@@ -197,26 +197,6 @@ public class ErrorResponse {
 En este método, retornamos el producto creado o un mensaje indicando que el producto se ha creado. Si algún campo es null, se recibe una respuesta de bad request. Si el precio es menor que 0, también se recibe un bad request. Si no hay ningún problema, se recibe el producto creado.
 
 
-Creamos el ProductRepository que extiende de CassandraRepository para conectar con la base de datos:
-```
-public interface ProductRepository extends CassandraRepository<Product, String> {
-}
-```
-
-Creamos una clase ErrorResponse para gestionar los errores:
-```
-public class ErrorResponse {
-
-    private int status;
-    private String error;
-
-    public ErrorResponse(int status, String message) {
-        this.status = status;
-        this.error = message;
-    }
-}
-```
-
 
 
 ## 6. Ejecución de la Aplicación
