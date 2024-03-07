@@ -195,11 +195,10 @@ public class ErrorResponse {
     }
 ```
 
-
-Aquí tienes la sección "Desarrollo de la Aplicación" mejor redactada:
-
 5. Desarrollo de la Aplicación
-Creamos nuestro modelo, en este caso, Product:
+Creamos nuestro modelo, en este caso:
+```
+ Product:
 java
 Copy code
 @Table
@@ -217,14 +216,16 @@ public class Product {
     private String image;
     private String category;
 }
+```
+
 Creamos el ProductRepository que extiende de CassandraRepository para conectar con la base de datos:
-java
-Copy code
+```
 public interface ProductRepository extends CassandraRepository<Product, String> {
 }
+```
+
 Creamos una clase ErrorResponse para gestionar los errores:
-java
-Copy code
+```
 public class ErrorResponse {
 
     private int status;
@@ -235,6 +236,8 @@ public class ErrorResponse {
         this.error = message;
     }
 }
+```
+
 En el controlador gestionamos el CRUD. Por ejemplo, para el método POST:
 ```
 @PostMapping("/products")
